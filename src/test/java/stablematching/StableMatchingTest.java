@@ -76,6 +76,13 @@ public class StableMatchingTest {
 		testMatchable(z, size);
 	}
 	
+	@Test
+	public void testGaleShapley(){
+		
+		BiMap<Proposer, Acceptor> matches = StableMatching.GaleShapley(ps, as);
+		Error<Boolean> err = isStableMatching(matches);
+		assertNoError(err);
+	}
 	
 	@Test
 	public void testIsStableMatching(){
