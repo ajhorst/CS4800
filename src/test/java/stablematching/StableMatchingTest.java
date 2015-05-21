@@ -2,6 +2,9 @@ package stablematching;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static utils.Error.newMessage;
+import static utils.TestError.assertNoError;
+import static utils.TestError.assertError;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +15,11 @@ import static java.lang.String.format;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 import stablematching.Matchable;
+import utils.Error;
 
 public class StableMatchingTest {
 
@@ -67,6 +74,51 @@ public class StableMatchingTest {
 		testMatchable(x, size);
 		testMatchable(y, size);
 		testMatchable(z, size);
+	}
+	
+	
+	@Test
+	public void testIsStableMatching(){
+		BiMap<Proposer, Acceptor> unstableMatches = HashBiMap.create();
+		unstableMatches.put(v, a);
+		unstableMatches.put(w, b);
+		unstableMatches.put(x, c);
+		unstableMatches.put(y, d);
+		unstableMatches.put(z, e);
+		Error<Boolean> err = isStableMatching(unstableMatches);
+		assertError(err);
+		
+		// known stable matching from above set
+		BiMap<Proposer, Acceptor> stableMatches = HashBiMap.create();
+		stableMatches.put(v, e);
+		stableMatches.put(w, a);
+		stableMatches.put(x, b);
+		stableMatches.put(y, c);
+		stableMatches.put(z, d);
+		err = isStableMatching(stableMatches);
+		assertNoError(err);
+	}
+	
+	public Error<Boolean> isStableMatching(BiMap<Proposer, Acceptor> matches){
+		for(Proposer originalProposer : matches.keySet()){
+			List<Acceptor> preferredAcceptors = originalProposer.getPreferences();
+			Acceptor originalAcceptor = matches.get(originalProposer);
+			// look at all preferred acceptors for this proposer
+			for(int i = 0; i < preferredAcceptors.indexOf(originalAcceptor); i++){
+				Acceptor preferredAcceptor = preferredAcceptors.get(i);
+				// if an acceptor prefer this proposer to their match, not stable
+				List<Proposer> acceptorPrefs = preferredAcceptor.getPreferences();
+				Proposer currentMatch = matches.inverse().get(preferredAcceptor);
+				int currentMatchPriority = acceptorPrefs.indexOf(currentMatch);
+				int newSuitorPriority = acceptorPrefs.indexOf(originalProposer);
+				if(newSuitorPriority < currentMatchPriority){
+					return newMessage(false, "%s and %s prefer each other to their current pairing: (%s,%s) and (%s,%s)",
+							originalProposer, preferredAcceptor, originalProposer, originalAcceptor, currentMatch, preferredAcceptor);
+				}
+			}
+		}
+		
+		return newMessage(true, null);
 	}
 	
 	public <X> void testMatchable(Matchable<X> m, int size){
