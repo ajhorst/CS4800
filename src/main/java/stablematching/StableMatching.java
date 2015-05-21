@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Table;
 
 public class StableMatching{
 
@@ -17,6 +18,7 @@ public class StableMatching{
 	private static class GaleShapley<X extends Matchable<Y>, Y extends Matchable<X>>{
 		private Collection<X> listX;
 		private Collection<Y> listY;
+		private Table<X, Y, Boolean> attemptedPairs;
 		
 		protected GaleShapley(Collection<X> listX, Collection<Y> listY){
 			this.listX = listX;
@@ -58,6 +60,16 @@ public class StableMatching{
 					throw new RuntimeException(String.format(sizeMsg, elem.toString(), elemSize, len1));
 				}
 			}
+		}
+		
+		private Y getHighestRemainingChoice(X x){
+			for(Y y : x.getPreferences()){
+				if(!attemptedPairs.contains(x, y)){
+					attemptedPairs.put(x, y, true);
+					return y;
+				}
+			}
+			throw new RuntimeException(String.format("Chooser %s ran out of available matches", x.toString()));
 		}
 	}
 }
