@@ -44,6 +44,23 @@ public class TestEdge {
 	}
 	
 	@Test
+	public void testConnectedNodes(){
+		Edge e = Edge.connectNodes(a, b, 2);
+		assertEquals(format("Edge weight should be 2, was %s", e.getWeight()), e.getWeight(), 2);
+		
+		assertEquals(format("Edge should have 2 end Nodes, had %d", e.getEnds().length), e.getEnds().length, 2);
+		assertEquals(format("Given A, edge's other node should be B, was %s", e.getOtherEnd(a)), e.getOtherEnd(a), b);
+		assertEquals(format("Given B, edge's other node should be A, was %s", e.getOtherEnd(b)), e.getOtherEnd(b), a);
+		
+		
+		assertTrue("Node A should connect to Node B", a.isConnectedToNode(b));
+		assertTrue("Node B should connect to Node A", b.isConnectedToNode(a));
+		
+		assertFalse("Node A should not connect to Node C", a.isConnectedToNode(c));
+		assertFalse("Node A should not connect to a null node", a.isConnectedToNode(null));
+	}
+	
+	@Test
 	public void testEdgeConnections(){
 		
 		assertEquals(format("Node A should have 0 edges, had %d", a.getEdges().size() ), a.getEdges().size(), 0);

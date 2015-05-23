@@ -27,6 +27,16 @@ public class Edge{
 		return this.weight;
 	}
 	
+	public Node getOtherEnd(Node end){
+		if(end.equals(this.end1)){
+			return this.end2;
+		} else if (end.equals(this.end2)){
+			return this.end1;
+		} else{
+			throw new RuntimeException(String.format("Edge %s does not contain Node %s", this, end));
+		}
+	}
+	
 	public static Edge connectNodes(Node end1, Node end2, int weight){
 		Edge e = new Edge(end1, end2, weight);
 		e.end1.addEdge(e);
