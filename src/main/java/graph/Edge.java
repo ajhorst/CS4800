@@ -1,6 +1,6 @@
 package graph;
 
-public class Edge{
+public class Edge implements Comparable<Edge>{
 	private final Node end1, end2;
 	private final int weight;
 	
@@ -63,5 +63,18 @@ public class Edge{
 		
 		Edge otherEdge = (Edge)obj;
 		return this.end1 == otherEdge.end1 && this.end2 == otherEdge.end2;
+	}
+
+	@Override
+	public int compareTo(Edge o) {
+		/* 
+		 * orders edges by weight. If weight is the same, order by toString, which is somewhat arbitrary
+		 * but makes sure that different edges of the same weight aren't considered identical. 
+		 */
+		int weightDiff = this.getWeight() - o.getWeight();
+		if(weightDiff != 0){
+			return weightDiff;
+		}
+		return this.toString().compareTo(o.toString());
 	}
 }

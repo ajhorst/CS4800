@@ -44,6 +44,15 @@ public class Node {
 		}
 		edges.add(edge);
 	}
+
+	public boolean isConnectedToNode(Node node){
+		for(Edge e : this.edges){
+			if (e.getOtherEnd(this).equals(node)){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public static Set<Node> buildGraph(Node... nodes){
 		Set<Node> result = new HashSet<>();

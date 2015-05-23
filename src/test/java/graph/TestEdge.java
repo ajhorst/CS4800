@@ -1,9 +1,13 @@
 package graph;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import static java.lang.String.format;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -42,6 +46,46 @@ public class TestEdge {
 		assertEquals("Edge BA should have Node A as its first end", a, ba.getEnds()[0]);
 		assertEquals("Edge BA should have Node B as its second end", a, ba.getEnds()[1]);
 	}
+
+	
+	@Test
+	public void testEdgesSorting(){
+		
+		Edge ab = Edge.connectNodes(a, b, 1);
+		Edge bc = Edge.connectNodes(b, c, 2);
+		Edge ac = Edge.connectNodes(a, c, 4);
+		Edge ad = Edge.connectNodes(a, d, 7);
+		Edge bd = Edge.connectNodes(b, d, 4);
+		
+		SortedSet<Edge> edges = new TreeSet<>();
+		edges.add(ab);
+		edges.add(ad);
+		edges.add(ac);
+		edges.add(bc);
+		edges.add(bd);
+		
+		Edge firstEdge = popFromSet(edges);
+		assertEquals(format("1st edge should be 1, was %d", firstEdge.getWeight()), firstEdge.getWeight(), 1);
+		
+		Edge secondEdge = popFromSet(edges);
+		assertEquals(format("2nd edge should be 2, was %d", secondEdge.getWeight()), secondEdge.getWeight(), 2);
+		
+		Edge thirdEdge = popFromSet(edges);
+		assertEquals(format("3rd edge should be 4, was %d", thirdEdge.getWeight()), thirdEdge.getWeight(), 4);
+		
+		Edge forthEdge = popFromSet(edges);
+		assertEquals(format("4th edge should be 4, was %d", forthEdge.getWeight()), forthEdge.getWeight(), 4);
+		
+		Edge fifthEdge = popFromSet(edges);
+		assertEquals(format("5th edge should be 7, was %d", fifthEdge.getWeight()), fifthEdge.getWeight(), 7);
+	}
+	
+	private <X> X popFromSet(SortedSet<X> s){
+		X result = s.first();
+		s.remove(result);
+		return result;
+	}
+
 	
 	@Test
 	public void testConnectedNodes(){
