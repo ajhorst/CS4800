@@ -1,5 +1,6 @@
 package graph;
 
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -137,5 +138,16 @@ public class TestEdge {
 		assertEquals("Node A should only have one edge", 1, a.getEdges().size());
 		assertEquals("Node B should only have one edge", 1, b.getEdges().size());
 		
+	}
+
+	public static void assertGraphContainsEdge(Set<Edge> graph, Edge edge){
+		String edgeName = format("%s%s", edge.getEnds()[0].getName(), edge.getEnds()[1].getName());
+		assertTrue(format("graph should contain edge %s", edgeName), graph.contains(edge));
+	}
+	
+	public static void assertGraphContainsEdges(Set<Edge> graph, Edge... subset){
+		for (Edge e : subset){
+			assertGraphContainsEdge(graph, e);
+		}
 	}
 }
