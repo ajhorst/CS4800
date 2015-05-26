@@ -22,4 +22,22 @@ public class TestMemoizable {
 		m.get(1);
 		assertEquals("Memoizable map should now be size 2", 2, m.memo.size());
 	}
+	
+	@Test
+	public void testMemoizablePair(){
+		MemoizablePair<Integer, Integer, Integer> m = new MemoizablePair<Integer, Integer, Integer>(){
+			@Override
+			public Integer compute(Integer x, Integer y) {
+				return x + y;
+		}};
+
+		
+		assertEquals("Memoizable map should be empty", 0, m.memo.size());
+		m.get(0, 0);
+		assertEquals("Memoizable map should be size 1", 1, m.memo.size());
+		m.get(0, 0);
+		assertEquals("Memoizable map should still be size 1", 1, m.memo.size());
+		m.get(1, 0);
+		assertEquals("Memoizable map should now be size 2", 2, m.memo.size());
+	}
 }
