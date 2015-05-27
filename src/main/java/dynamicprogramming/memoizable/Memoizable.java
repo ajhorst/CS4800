@@ -1,4 +1,4 @@
-package dynamicprogramming;
+package dynamicprogramming.memoizable;
 
 import java.util.HashMap;
 import java.util.Map;

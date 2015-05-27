@@ -1,4 +1,4 @@
-package dynamicprogramming;
+package dynamicprogramming.memoizable;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;

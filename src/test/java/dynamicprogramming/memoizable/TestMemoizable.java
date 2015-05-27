@@ -1,4 +1,4 @@
-package dynamicprogramming;
+package dynamicprogramming.memoizable;
 
 import static org.junit.Assert.assertEquals;
 
