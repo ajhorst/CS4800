@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class TestMemoizable {
+public class TestMemoizer {
 
 	@Test
 	public void testMemoizable(){
-		Memoizable<Integer, Integer> m = new Memoizable<Integer, Integer>(){
+		Memoizer<Integer, Integer> m = new Memoizer<Integer, Integer>(){
 			@Override
 			public Integer compute(Integer x) {
 				return x;
@@ -25,7 +25,7 @@ public class TestMemoizable {
 	
 	@Test
 	public void testMemoizablePair(){
-		MemoizablePair<Integer, Integer, Integer> m = new MemoizablePair<Integer, Integer, Integer>(){
+		MemoizerPair<Integer, Integer, Integer> m = new MemoizerPair<Integer, Integer, Integer>(){
 			@Override
 			public Integer compute(Integer x, Integer y) {
 				return x + y;

@@ -3,7 +3,7 @@ package dynamicprogramming.memoizable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Memoizable<X, Y> {
+public abstract class Memoizer<X, Y> {
 	
 	protected Map<X, Y> memo = new HashMap<X, Y>();
 	

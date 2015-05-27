@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 
-public abstract class MemoizablePair<X, Y, Z> extends Memoizable<Pair<X, Y>, Z> {
+public abstract class MemoizerPair<X, Y, Z> extends Memoizer<Pair<X, Y>, Z> {
 	
 	public abstract Z compute(X x, Y y);
 	
