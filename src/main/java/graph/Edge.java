@@ -1,5 +1,9 @@
 package graph;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+
 public class Edge implements Comparable<Edge>{
 	private final Node end1, end2;
 	private final int weight;
@@ -21,6 +25,10 @@ public class Edge implements Comparable<Edge>{
 	
 	public Node[] getEnds(){
 		return new Node[]{end1, end2};
+	}
+	
+	public List<Node> getEndsList(){
+		return ImmutableList.of(this.end1, this.end2);
 	}
 	
 	public int getWeight(){

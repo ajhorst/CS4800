@@ -70,13 +70,11 @@ public class Kruskal implements MinimumSpanningTree{
 			break;
 		case 1: // the edge connects to a single subtree
 			subtree = containingSubtrees.get(0);
-			subtree.add(n1); // will already contain either N1 or N2, the reduntant add will be a noop due to Node.equals()
-			subtree.add(n2);
+			subtree.addAll(e.getEndsList()); // will already contain either N1 or N2, the reduntant add will be a noop due to Node.equals()
 			break;
 		case 0: // the edge is a new subtree
 			subtree = new HashSet<>();
-			subtree.add(n1);
-			subtree.add(n2);
+			
 			break;
 		default: throw new RuntimeException("error in kruskal's algorithm subtree forming");
 		}
