@@ -44,6 +44,12 @@ public class TestMinimumSpanningTreeAlgos {
 		verifyMinSpanningTree(new Kruskal().findMinSpanningTree(nodes));
 	}
 	
+	@Test
+	public void testPrim(){
+		Set<Node> nodes = Sets.newHashSet(a, b, c, d, e, f, g);
+		verifyMinSpanningTree(new Prim().findMinSpanningTree(nodes));
+	}
+	
 	public void verifyMinSpanningTree(Set<Edge> edges){
 		assertGraphContainsEdges(edges, ab, ad, be, ce, df, eg);
 	}
