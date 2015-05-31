@@ -1,20 +1,19 @@
 package graph;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Node {
 	public final String name;
-	public Collection<Edge> edges;
+	public Set<Edge> edges;
 	
 	public Node(String name){
 		this.name = name;
 		this.edges = new HashSet<>();
 	}
 	
-	public Node(String name, Collection<Edge> edges){
+	public Node(String name, Set<Edge> edges){
 		this.name = name;
 		this.edges = edges;
 	}
@@ -26,7 +25,7 @@ public class Node {
 		this.edges = e;
 	}
 	
-	public void setEdges(Collection<Edge> edges){
+	public void setEdges(Set<Edge> edges){
 		this.edges = edges;
 	}
 	
@@ -34,7 +33,7 @@ public class Node {
 		return this.name;
 	}
 	
-	public Collection<Edge> getEdges(){
+	public Set<Edge> getEdges(){
 		return this.edges;
 	}
 	
