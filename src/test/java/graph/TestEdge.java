@@ -1,11 +1,12 @@
 package graph;
 
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.collect.Lists;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertFalse;
@@ -58,35 +59,24 @@ public class TestEdge {
 		Edge ad = Edge.connectNodes(a, d, 7);
 		Edge bd = Edge.connectNodes(b, d, 4);
 		
-		SortedSet<Edge> edges = new TreeSet<>();
-		edges.add(ab);
-		edges.add(ad);
-		edges.add(ac);
-		edges.add(bc);
-		edges.add(bd);
+		List<Edge> edges = Lists.newArrayList(ab, bc, ac, ad, bd);
+		edges.sort(Edge::compareByWeight);
 		
-		Edge firstEdge = popFromSet(edges);
+		Edge firstEdge = edges.get(0);
 		assertEquals(format("1st edge should be 1, was %d", firstEdge.getWeight()), firstEdge.getWeight(), 1);
 		
-		Edge secondEdge = popFromSet(edges);
+		Edge secondEdge = edges.get(1);
 		assertEquals(format("2nd edge should be 2, was %d", secondEdge.getWeight()), secondEdge.getWeight(), 2);
 		
-		Edge thirdEdge = popFromSet(edges);
+		Edge thirdEdge = edges.get(2);
 		assertEquals(format("3rd edge should be 4, was %d", thirdEdge.getWeight()), thirdEdge.getWeight(), 4);
 		
-		Edge forthEdge = popFromSet(edges);
+		Edge forthEdge = edges.get(3);
 		assertEquals(format("4th edge should be 4, was %d", forthEdge.getWeight()), forthEdge.getWeight(), 4);
 		
-		Edge fifthEdge = popFromSet(edges);
+		Edge fifthEdge = edges.get(4);
 		assertEquals(format("5th edge should be 7, was %d", fifthEdge.getWeight()), fifthEdge.getWeight(), 7);
 	}
-	
-	private <X> X popFromSet(SortedSet<X> s){
-		X result = s.first();
-		s.remove(result);
-		return result;
-	}
-
 	
 	@Test
 	public void testConnectedNodes(){

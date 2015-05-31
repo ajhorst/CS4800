@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-public class Edge implements Comparable<Edge>{
+public class Edge{
 	private final Node end1, end2;
 	private final int weight;
 	
@@ -73,8 +73,7 @@ public class Edge implements Comparable<Edge>{
 		return this.end1 == otherEdge.end1 && this.end2 == otherEdge.end2;
 	}
 
-	@Override
-	public int compareTo(Edge o) {
+	public int compareByWeight(Edge o) {
 		/* 
 		 * orders edges by weight. If weight is the same, order by toString, which is somewhat arbitrary
 		 * but makes sure that different edges of the same weight aren't considered identical. 
