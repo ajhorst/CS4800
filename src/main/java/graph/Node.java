@@ -53,14 +53,6 @@ public class Node {
 		return false;
 	}
 	
-	public static Set<Node> buildGraph(Node... nodes){
-		Set<Node> result = new HashSet<>();
-		for(Node n : nodes){
-			result.add(n);
-		}
-		return result;
-	}
-	
 	public String toString(){
 		return this.getName();
 	}
