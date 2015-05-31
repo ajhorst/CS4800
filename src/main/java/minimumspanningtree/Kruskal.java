@@ -2,31 +2,30 @@ package minimumspanningtree;
 
 import graph.Edge;
 import graph.Node;
+import graph.Nodes;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class Kruskal implements MinimumSpanningTree{
 
-	private SortedSet<Edge> allEdges;
+	private List<Edge> sortedEdges;
 	private Set<Set<Node>> forest;
 	
 	public Kruskal(){
 		this.forest = new HashSet<>();
-		this.allEdges = new TreeSet<>();
 	}
 	
 	public Set<Edge> findMinSpanningTree(Set<Node> graph) {
 		Set<Edge> result = new HashSet<Edge>();
-		for(Node n : graph){
-			allEdges.addAll(n.getEdges());
-		}
+		sortedEdges = Nodes.getAllEdges(graph).stream()
+						.sorted(Edge::compareByWeight)
+						.collect(Collectors.toList());
 		
-		for(Edge e : allEdges){
+		for(Edge e : sortedEdges){
 			if( formsCycle(e) ){
 				continue;
 			}

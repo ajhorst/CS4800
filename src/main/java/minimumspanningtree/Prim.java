@@ -3,9 +3,10 @@ package minimumspanningtree;
 import graph.Edge;
 import graph.Node;
 
+import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class Prim implements MinimumSpanningTree{
@@ -30,7 +31,7 @@ public class Prim implements MinimumSpanningTree{
 	}
 	
 	protected Edge getLowestGrowableEdge(Set<Node> nodes){
-		SortedSet<Edge> edges = Sets.newTreeSet();
+		List<Edge> edges = Lists.newArrayList();//Sets.newTreeSet();
 		for(Node n : nodes){
 			for(Edge e : n.getEdges()){
 				Node otherEnd = e.getOtherEnd(n);
@@ -39,7 +40,8 @@ public class Prim implements MinimumSpanningTree{
 				}
 			}
 		}
-		return edges.first(); // algorithmically, there will always be at least one node with at least one valid edge
+		edges.sort(Edge::compareByWeight);
+		return edges.get(0); // algorithmically, there will always be at least one node with at least one valid edge
 	}
 
 }
