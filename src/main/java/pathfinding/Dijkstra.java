@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 public class Dijkstra implements ShortestPathFinder{
 	
@@ -16,7 +17,37 @@ public class Dijkstra implements ShortestPathFinder{
 	
 	@Override
 	public List<Edge> findShortestPath(Set<Node> graph, Node start, Node end) {
-		return null;
+		Map<Node, NodeData> nodeData = Maps.newHashMap();
+		
+		for(Node n : graph){
+			nodeData.put(n, new NodeData()); 
+		}
+		nodeData.get(start).distance = 0;
+		nodeData.get(start).visited = true;
+		
+		Node currentNode = start;
+		
+		while(true){ // terminate if break conditions are reached at end of loop
+			Set<Edge> nextEdges = currentNode.getEdges();
+			for(Edge e : nextEdges){
+				Node nextNode = e.getOtherEnd(currentNode);
+				NodeData nd = nodeData.get(nextNode);
+				int newDistance = nodeData.get(currentNode).distance + e.getWeight();
+				if(nd.distance > newDistance){
+					nd.distance = newDistance;
+					nd.prev = e;
+				}
+			}
+			currentNode = getClosestUnvisitedNode(nodeData);
+			nodeData.get(currentNode).visited = true;
+			
+			boolean endReached = nodeData.get(end).visited;
+			if(smallestRemainingIsInfinity(nodeData) || endReached){
+				break;
+			}
+		}
+		
+		return reversePrevList(start, end, nodeData);
 	}
 	
 	/*
