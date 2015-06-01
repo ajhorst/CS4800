@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static utils.TestException.assertExceptionThrown;
+import graph.Edge;
 import graph.Node;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -53,5 +55,20 @@ public class TestDijkstra {
 		assertEquals("closest remaining node should be n2", n2, d.getClosestUnvisitedNode(nodeData));
 		nd2.visited = true;
 		assertExceptionThrown( () -> d.getClosestUnvisitedNode(nodeData) );
+	}
+	
+	@Test
+	public void testReversePrevList(){
+		Node n3 = new Node("N3");
+		NodeData nd3 = d.new NodeData();
+		nodeData.put(n3, nd3);
+		Edge e1 = Edge.connectNodes(n1, n2, 1);
+		nd2.prev = e1;
+		Edge e2 = Edge.connectNodes(n2, n3, 1);
+		nd3.prev = e2;
+		List<Edge> edges = d.reversePrevList(n1, n3, nodeData);
+		assertEquals("should be two edges in list", 2, edges.size());
+		assertEquals("first edge should be e1", e1, edges.get(0));
+		assertEquals("second edge should be e2", e2, edges.get(1));
 	}
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.Lists;
+
 public class Dijkstra implements ShortestPathFinder{
 	
 	protected Dijkstra(){}
@@ -34,6 +36,16 @@ public class Dijkstra implements ShortestPathFinder{
 		return nodeData.values()
 				.stream()
 				.allMatch( nd -> nd.visited || nd.distance == Integer.MAX_VALUE);
+	}
+	
+	protected List<Edge> reversePrevList(Node start, Node end, Map<Node, NodeData> nodeData){
+		List<Edge> result = Lists.newArrayList();
+		Edge prevEdge = nodeData.get(end).prev;
+		for(Node n = end; !n.equals(start); prevEdge = nodeData.get(n).prev){
+			result.add(prevEdge);
+			n = prevEdge.getOtherEnd(n);
+		}
+		return Lists.reverse(result);
 	}
 	
 	// the extra data about each node required for Dijkstra's
