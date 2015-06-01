@@ -1,6 +1,8 @@
 package pathfinding;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static utils.TestException.assertExceptionThrown;
 import graph.Node;
 
@@ -30,6 +32,16 @@ public class TestDijkstra {
 		nodeData = Maps.newHashMap();
 		nodeData.put(n1,  nd1);
 		nodeData.put(n2,  nd2);
+	}
+
+	@Test
+	public void testSmallestRemainingIsInfinity(){
+		assertTrue("smallest remaining distance should be infinity", d.smallestRemainingIsInfinity(nodeData));
+		nd1.distance = 0;
+		assertFalse("smallest remaining distance should not be infinity", d.smallestRemainingIsInfinity(nodeData));
+		nd1.distance = Integer.MAX_VALUE;
+		nd1.visited = true;
+		assertTrue("unvisited node should be infinity", d.smallestRemainingIsInfinity(nodeData));
 	}
 	
 	@Test

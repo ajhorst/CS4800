@@ -30,6 +30,12 @@ public class Dijkstra implements ShortestPathFinder{
 		return remainingNodes.get(0);	
 	}
 	
+	protected boolean smallestRemainingIsInfinity(Map<Node, NodeData> nodeData){
+		return nodeData.values()
+				.stream()
+				.allMatch( nd -> nd.visited || nd.distance == Integer.MAX_VALUE);
+	}
+	
 	// the extra data about each node required for Dijkstra's
 	protected class NodeData{
 		boolean visited;
